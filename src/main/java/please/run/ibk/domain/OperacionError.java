@@ -1,16 +1,16 @@
-package please.run.ibk;
+package please.run.ibk.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PromartError {
+public class OperacionError {
 	  private int code;
 	  private String message;
 	  
-	  public PromartError(){
+	  public OperacionError(){
 	    
 	  }
 	  
-	  public  PromartError (@JsonProperty("code") int code,
+	  public  OperacionError (@JsonProperty("code") int code,
 	      @JsonProperty("message") String message){
 	    this.code=code;
 	    this.message=message;

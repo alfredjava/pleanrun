@@ -1,23 +1,23 @@
-package please.run.ibk;
+package please.run.ibk.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(Include.NON_NULL)
-public class PromartResponse {
+public class OperacionResponse {
 
 	  private int responseCode;
 	  private String responseDescription;
-	  private PromartError error;
+	  private OperacionError error;
 	  
-	  public PromartResponse() {
+	  public OperacionResponse() {
 	    
 	  }
 
-	  public PromartResponse(@JsonProperty("responseCode") int responseCode,
+	  public OperacionResponse(@JsonProperty("responseCode") int responseCode,
 	      @JsonProperty("responseDescription") String responseDescription,
-	      @JsonProperty("error") PromartError error) {
+	      @JsonProperty("error") OperacionError error) {
 	    this.responseCode = responseCode;
 	    this.responseDescription = responseDescription;
 	    this.error = error;
@@ -39,11 +39,11 @@ public class PromartResponse {
 	    this.responseDescription = responseDescription;
 	  }
 
-	  public PromartError getError() {
+	  public OperacionError getError() {
 	    return error;
 	  }
 
-	  public void setError(PromartError error) {
+	  public void setError(OperacionError error) {
 	    this.error = error;
 	  }
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import please.run.ibk.PromartError;
+import please.run.ibk.domain.OperacionError;
 import please.run.ibk.domain.ResponseUbicacion;
 import please.run.ibk.domain.Tienda;
 import please.run.ibk.util.ResponseConstants;
@@ -45,7 +45,7 @@ public class OperacionController {
     	try{
     		response = restClient.executeRestClientPost(requestUbicacion,url,"7599476f-ed64-4908-a971-8023aa7787d6");
 	    	if(response == null){
-	    		PromartError error = new PromartError(ResponseConstants.VALUE_ERROR_GENERIC_CODE, env.getProperty("msg.error.occurred.ms"));
+	    		OperacionError error = new OperacionError(ResponseConstants.VALUE_ERROR_GENERIC_CODE, env.getProperty("msg.error.occurred.ms"));
 	        	int responseCode = ResponseConstants.VALUE_ERROR_GENERIC_CODE;
 	        	String responseDescription = env.getProperty("msg.error.occurred.ms");	        	
 	        	
