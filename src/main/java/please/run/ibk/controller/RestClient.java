@@ -13,8 +13,6 @@ import javax.xml.ws.ProtocolException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import please.run.ibk.controller.ControllerSupport;
 @Service
 public class RestClient {
 	
@@ -35,7 +33,7 @@ public class RestClient {
 	
 	
 	
-	public String executeRestClientPost(Map<String, Object> request,String url,String clientID){
+	public String executeRestClientPOST(Map<String, Object> request,String url,String clientID){
 		
 		HttpsURLConnection con=getHttpsURLConnection(url);
 		String resul=null;
@@ -44,12 +42,51 @@ public class RestClient {
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type", "application/json");
 			con.setRequestProperty("X-IBM-Client-Id", clientID);
-
-			String input =ControllerSupport.buildJSONResponse(request);
     		OutputStream os = con.getOutputStream();
-    		os.write(input.getBytes());
-    		os.flush();
-    		    		
+    		if(request!=null){
+        		String input =ControllerSupport.buildJSONResponse(request);
+        		os.write(input.getBytes());
+        		os.flush();
+    		}    		    		
+    		if (con.getResponseCode() != 200) {
+    			throw new RuntimeException("Failed : HTTP error code : "
+    					+ con.getResponseCode());
+    		}
+    		
+    		BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream())));
+    		
+    		String output=null;
+    		System.out.println("Output from Server .... \n");
+    		while ((output = br.readLine()) != null) {
+    			System.out.println(output);
+    			resul=output;
+    		}
+
+    		con.disconnect();    
+			
+		} catch (ProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return resul;
+	}
+	
+	public String executeRestClientGET(String url,String clientID){
+		
+		HttpsURLConnection con=getHttpsURLConnection(url);
+		String resul=null;
+		con.setDoOutput(true);    		
+		try {
+			con.setRequestMethod("GET");
+			con.setRequestProperty("Content-Type", "application/json");
+			con.setRequestProperty("Accept", "application/json");
+			con.setRequestProperty("X-IBM-Client-Id", clientID);    		
+    	   		    		
     		if (con.getResponseCode() != 200) {
     			throw new RuntimeException("Failed : HTTP error code : "
     					+ con.getResponseCode());
